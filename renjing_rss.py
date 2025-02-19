@@ -96,11 +96,22 @@ def get_article_content(article_id: int):
         'Pragma': 'no-cache',
         'Cache-Control': 'no-cache',
     }
-    response = requests.get(
-        f'ccpubsf/10336/10336339/cdn-static-pages/newsinfo/pc/{article_id}_zh-cn.html.Body.js',
+
+    article_response = requests.get(
+        f'https://www.renjingw.com.cn/newsinfo/{article_id}.html',
         params={},
         headers=headers,
     )
+    article_response.raise_for_status()
+    article_meta = BeautifulSoup(article_response.text, 'html')
+    body_js_url = next(article_meta.select_one('#smart-body').children)['src']
+
+    response = requests.get(
+        body_js_url,
+        params={},
+        headers=headers,
+    )
+
     if response.status_code != 200:
         raise RuntimeError(f'get news {article_id} failed', response.text)
 
@@ -108,7 +119,6 @@ def get_article_content(article_id: int):
     text: str = response.text
     text = text.removeprefix('document.write(\'')
     text = text.removesuffix('\'')
-    print(text)
     text = f'"{text}"'
     text = json.loads(text).strip()
     soup = BeautifulSoup(text, 'html')

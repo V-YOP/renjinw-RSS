@@ -3,7 +3,7 @@ from os import environ
 
 import requests
 
-from renjen_rss import create_rss
+from renjing_rss import create_rss
 
 ON_SCF = environ.get('ON_SCF', default='False') == 'True'
 

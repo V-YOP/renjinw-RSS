@@ -4,7 +4,7 @@ A RSS source for renjingw.com.cn
 
 # usage
 
-deploy it on a server, and Add source '<your-server>:9000/renjingw'.
+deploy it on a server, and Add RSS source '<your-server>:9000/renjingw'.
 
 # limitations
 
