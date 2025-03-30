@@ -1,3 +1,0 @@
-#!/bin/bash
-export ON_SCF=True
-/var/lang/python39/bin/python3 -u app.py

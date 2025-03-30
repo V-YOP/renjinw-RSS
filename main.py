@@ -3,15 +3,14 @@ from os import environ
 
 import requests
 
-from renjing_rss import create_rss
+from RSSService import RenjingwRSSService
 
 ON_SCF = environ.get('ON_SCF', default='False') == 'True'
 
 app = Flask(__name__)
-
 @app.route('/renjingw')
 def hello_world():
-   return Response(create_rss(), mimetype='application/xml') 
+   return Response(rss_service.create_rss(), mimetype='application/xml') 
 
 # 图像代理的视图函数
 # @app.route('/image/<image_name>')
@@ -38,4 +37,5 @@ def hello_world():
 #         return "Image not found", 404
 
 if __name__ == '__main__':
+   rss_service = RenjingwRSSService()
    app.run(host='0.0.0.0',port=9000)
